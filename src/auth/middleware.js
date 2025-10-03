@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../schemas/user.js";
+import Doctor from "../schemas/doctor.js";
 
 import ClientError from "../helpers/client_error.js";
 
@@ -18,7 +18,7 @@ export const authRoute = (req, res, next) => {
       throw new ClientError("Access Denied. Invalid credentials.", 401);
     }
 
-    req.userID = JWTdata.userID;
+    req.doctorID = JWTdata.doctorID;
     req.role = JWTdata.role;
   });
 

@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
-const QuestionCategorySchema = new Schema({
-  categoryCode: { type: String, required: true, unique: true },
-  categoryName: String,
-});
-
-const QuestionSchema = new Schema({
+const QuestionSchema = new mongoose.Schema({
   description: String,
-  category: { type: Schema.Types.ObjectId, ref: "QuestionCategory" },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: "QuestionCategory" },
   answer: String,
   guides: String,
 });

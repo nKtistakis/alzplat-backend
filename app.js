@@ -9,6 +9,8 @@ import rootRouter from "./src/routes/root.js";
 import { initDbConnection } from "./src/database/config.js";
 import { errorHandlerMiddleware } from "./src/routes/route_helpers.js";
 import mongoose from "mongoose";
+import Doctor from "./src/schemas/doctor.js";
+import Patient from "./src/schemas/patient.js";
 
 const app = express();
 var corsOptions = {
@@ -53,4 +55,4 @@ laucnhServer();
 
 // ---------------------------------STARTUP CHECKS--------------------------------
 
-console.log(new mongoose.Types.ObjectId());
+// console.log(await Patient.find());

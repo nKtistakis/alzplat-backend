@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../schemas/user.js";
+import Doctor from "../schemas/doctor.js";
 import ClientError from "../helpers/client_error.js";
 
 const ACCESS_TOKEN_KEY = process.env.JWT_ACCESS_TOKEN_KEY;
@@ -10,16 +10,16 @@ const REFRESH_EXPIRATION = {
 };
 
 export async function generateTokens(credentials) {
-  const user = await User.findOne({ credentials });
+  const doctor = await Doctor.findOne({ credentials });
 
-  if (!user) {
+  if (!doctor) {
     throw new ClientError("Access Denied, invalid credentials", 401);
   }
 
   const accessToken = jwt.sign(
     {
-      userID: user._id,
-      role: "user",
+      doctorID: doctor._id,
+      role: "doctor",
     },
     ACCESS_TOKEN_KEY,
     ACCESS_EXPIRATION
@@ -27,8 +27,8 @@ export async function generateTokens(credentials) {
 
   const refreshToken = jwt.sign(
     {
-      userID: user._id,
-      role: "user",
+      doctorID: doctor._id,
+      role: "doctor",
     },
     REFRESH_TOKEN_KEY,
     REFRESH_EXPIRATION
@@ -37,19 +37,19 @@ export async function generateTokens(credentials) {
   return {
     accessToken,
     refreshToken,
-    user,
+    doctor,
   };
 }
 
-export async function generateAdminTokens(adminCode, userID) {
+export async function generateAdminTokens(adminCode, doctorID) {
   if (adminCode !== process.env.JWT_ADMIN_HEADER_KEY) {
     throw new ClientError("Access Denied, invalid credentials", 401);
   }
 
   const JWTdata = {
-    // Uncomment if you want to impersonate user
-    // role: "user",
-    // userID: userID,
+    // Uncomment if you want to impersonate doctor
+    // role: "doctor",
+    // doctorID: doctorID,
     role: "admin",
   };
 
@@ -63,7 +63,7 @@ export async function generateAdminTokens(adminCode, userID) {
   };
 }
 
-export async function refresh(refreshToken, userID) {
+export async function refresh(refreshToken, doctorID) {
   return jwt.verify(refreshToken, REFRESH_TOKEN_KEY, (err, JWTdata) => {
     if (err)
       throw new ClientError(
@@ -71,11 +71,11 @@ export async function refresh(refreshToken, userID) {
         401
       );
 
-    if (JWTdata.userID != userID && JWTdata.role !== "admin")
+    if (JWTdata.doctorID != doctorID && JWTdata.role !== "admin")
       throw new ClientError("Access Denied. Token is malformed, relogin.", 400);
 
     const accessToken = jwt.sign(
-      { userID: JWTdata.userID, role: JWTdata.role },
+      { doctorID: JWTdata.doctorID, role: JWTdata.role },
       ACCESS_TOKEN_KEY,
       ACCESS_EXPIRATION
     );

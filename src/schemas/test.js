@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
-const TestSchema = new Schema({
+const TestSchema = new mongoose.Schema({
   testName: String,
-  questions: [{ type: Schema.Types.ObjectId, ref: "Question" }],
+  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
 });
 
 TestSchema.statics.testTest = function () {

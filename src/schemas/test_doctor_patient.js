@@ -1,15 +1,23 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
-const TestDoctorPatientSchema = new Schema({
-  test: { type: Schema.Types.ObjectId, ref: "Test", required: true },
-  doctor: { type: Schema.Types.ObjectId, ref: "Doctor", required: true },
-  patient: { type: Schema.Types.ObjectId, ref: "Patient", required: true },
+const TestDoctorPatientSchema = new mongoose.Schema({
+  test: { type: mongoose.Schema.Types.ObjectId, ref: "Test", required: true },
+  doctor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor",
+    required: true,
+  },
+  patient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Patient",
+    required: true,
+  },
   name: String,
-  status: { type: Schema.Types.ObjectId, ref: "Status" },
+  status: { type: mongoose.Schema.Types.ObjectId, ref: "Status" },
   startDate: Date,
   endDate: Date,
-  notes: String,
-  results: [{ type: Schema.Types.ObjectId, ref: "TestResult" }],
+  results: { scorePercent: Number, notes: String },
 });
 
 TestDoctorPatientSchema.statics.testTestDoctorPatient = function () {

@@ -14,7 +14,7 @@ router.post(
       throw new ClientError("Access Denied. Request is malformed.", 401);
     }
 
-    const { accessToken, refreshToken, user } = await generateTokens(
+    const { accessToken, refreshToken, doctor } = await generateTokens(
       req.body.credentials
     );
 
@@ -34,26 +34,26 @@ router.post(
 
     res.json(
       new Response({
-        user: user,
+        doctor: doctor,
       })
     );
 
-    //res.json(new Response(user));
+    //res.json(new Response(doctor));
   })
 );
 
 router.post(
   "/refresh",
   catchAsync(async (req, res) => {
-    // UserID required for fetching user
-    if (!req.body.userID) {
+    // DoctorID required for fetching doctor
+    if (!req.body.doctorID) {
       throw new ClientError("Access Denied. Request is malformed.", 401);
     }
-    // This should change to google user ID
+    // This should change to google doctor ID
 
     const accessToken = await refresh(
       req.cookies[refreshCookieName],
-      req.body.userID
+      req.body.doctorID
     );
 
     res.cookie(accessCookieName, accessToken, {

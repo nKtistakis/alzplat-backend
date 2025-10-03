@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
 const AddressSchema = new mongoose.Schema({
   street: String,
@@ -13,13 +14,12 @@ const ContactSchema = new mongoose.Schema({
   email: String,
 });
 
-const PatientSchema = new Schema({
-  code: { type: String, required: true, unique: true },
+const PatientSchema = new mongoose.Schema({
   name: String,
   address: AddressSchema,
   contact: ContactSchema,
-  doctors: [{ type: Schema.Types.ObjectId, ref: "Doctor" }],
-  conditions: [{ type: Schema.Types.ObjectId, ref: "Condition" }],
+  doctors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }],
+  conditions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Condition" }],
 });
 
 PatientSchema.statics.testPatientnt = function () {

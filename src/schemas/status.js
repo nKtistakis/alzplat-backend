@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
-const StatusSchema = new Schema({
+const StatusSchema = new mongoose.Schema({
   code: { type: String, required: true, unique: true },
   name: String,
 });

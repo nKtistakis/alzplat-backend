@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
-const ConditionSchema = new Schema({
+const ConditionSchema = new mongoose.Schema({
   name: String,
 });
 

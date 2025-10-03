@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {} from "dotenv/config";
 
-import User from "../schemas/user.js";
+import { Doctor } from "../schemas/index.schemas.js";
 
 const mongo_uri =
   "mongodb://" +
@@ -27,10 +27,6 @@ export async function initDbConnection() {
     })
     .catch((error) => {
       console.error("Error connecting to MongoDB:", error.message);
-      SlackBot.sendErrorStackToSlackBot(
-        "Backend server did not launch successfully! Database Connection could not be established due to:\n" +
-          error
-      );
       return false;
     });
 }
@@ -40,7 +36,7 @@ export async function empty() {
   if (process.env.NODE_ENV == "production")
     return "Action not allowed on production environment";
 
-  await User.collection.drop();
+  await mongoose.connection.db.dropDatabase();
 
   return "BOMBED";
 }

@@ -1,0 +1,9 @@
+export { default as Test } from "./test.js";
+export { default as TestDoctorPatient } from "./test_doctor_patient.js";
+export { default as HealthStructure } from "./health_structure.js";
+export { default as Doctor } from "./doctor.js";
+export { default as Patient } from "./patient.js";
+export { default as Condition } from "./condition.js";
+export { default as Question } from "./question.js";
+export { default as QuestionCategory } from "./question_category.js";
+export { default as Status } from "./status.js";
