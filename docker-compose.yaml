@@ -1,0 +1,39 @@
+# Deploy service responsy
+
+services:
+  backend:
+    env_file:
+      - .env
+    container_name: api
+    build:
+      context: ./
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - responsy-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+    volumes:
+      # TODO: Check volumes in general
+      - mongo-data:/data/db
+    networks:
+      - responsy-network
+
+volumes:
+  mongo-data:
+    name: responsy-api-mongo-volume
+
+networks:
+  responsy-network:
+    name: responsy-network
+    driver: bridge
