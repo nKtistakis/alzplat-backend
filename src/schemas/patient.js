@@ -7,18 +7,24 @@ const AddressSchema = new mongoose.Schema({
   city: String,
   country: String,
   zip: String,
+  _id: false,
 });
 
 const ContactSchema = new mongoose.Schema({
   phone: String,
   email: String,
+  _id: false,
 });
 
 const PatientSchema = new mongoose.Schema({
   name: String,
   address: AddressSchema,
   contact: ContactSchema,
-  doctors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }],
+  doctor_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Doctor",
+  },
   conditions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Condition" }],
 });
 

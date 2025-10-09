@@ -17,9 +17,8 @@ const DEMO_ENTRIES = {
     },
     contact: { phone: "00306969695832", email: "certdebug@alzplat.com" },
     speciality: "UNIT Tester",
-    // TODO ADD SOME IDS!
     patients: ["68e0102972285cbbb7068163"],
-    healthStructure: "68dfadf323bf8027cb664300",
+    health_structure: "68dfadf323bf8027cb664300",
   },
   // ---------------------------------------------------------
   HEALTH_STRUCTURE: {
@@ -51,19 +50,20 @@ const DEMO_ENTRIES = {
       zip: "CF239FB",
     },
     contact: { phone: "00302109695832", email: "j.doe@alzplat.com" },
-    doctor: "68df9f411f45610f58e48892",
+    doctor_id: "68df9f411f45610f58e48892",
     conditions: ["68dff50246440534870a442d"],
   },
   QUESTION: {
     _id: new mongoose.Types.ObjectId("68e00a4f4f4c3b4f5c8b4567"),
     description: "What is 2 + 2?",
     category: new mongoose.Types.ObjectId("68e00a4f4f4c3b4f5c8b1234"),
-    answer: "4",
+    correctAnswer: "4",
+    points: 1,
     guides: "It's basic math!",
   },
   QUESTION_CATEGORY: {
-    _id: new mongoose.Types.ObjectId("68e00a4f4f4c3b4f5c8b1234"),
-    name: "Math",
+    name: "Essay",
+    code: "ESSAY",
     files: false,
   },
   STATUS: {
@@ -73,9 +73,10 @@ const DEMO_ENTRIES = {
   },
   TEST: {
     _id: new mongoose.Types.ObjectId("68e00c3f4f4c3b4f5c8b6789"),
-    testName: "Mini-Mental State Examination",
+    name: "Mini-Mental State Examination",
     questions: ["68e00a4f4f4c3b4f5c8b4567"],
-    results: { scorePercent: 85, comments: "Good cognitive function." },
+    doctor_id: "68df9f411f45610f58e48892",
+    name: "Initial Assessment",
   },
   TEST_DOCTOR_PATIENT: {
     _id: new mongoose.Types.ObjectId("68e00d4f4f4c3b4f5c8b7890"),
@@ -84,8 +85,10 @@ const DEMO_ENTRIES = {
     patient: "68e0102972285cbbb7068163",
     name: "Initial Assessment",
     status: "68e00b2f4f4c3b4f5c8b5678",
+    stopwatch: 360,
     startDate: new Date("2023-01-01T10:00:00Z"),
     endDate: new Date("2023-01-01T10:30:00Z"),
+    notes: "Patient showed signs of confusion.",
     results: { scorePercent: 85, notes: "Patient performed well." },
   },
 };

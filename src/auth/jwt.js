@@ -63,16 +63,13 @@ export async function generateAdminTokens(adminCode, doctorID) {
   };
 }
 
-export async function refresh(refreshToken, doctorID) {
+export async function refresh(refreshToken) {
   return jwt.verify(refreshToken, REFRESH_TOKEN_KEY, (err, JWTdata) => {
     if (err)
       throw new ClientError(
         "Access Denied. Refresh Token is invalid, please login.",
         401
       );
-
-    if (JWTdata.doctorID != doctorID && JWTdata.role !== "admin")
-      throw new ClientError("Access Denied. Token is malformed, relogin.", 400);
 
     const accessToken = jwt.sign(
       { doctorID: JWTdata.doctorID, role: JWTdata.role },

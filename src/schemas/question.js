@@ -3,8 +3,14 @@ import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
 const QuestionSchema = new mongoose.Schema({
   description: String,
-  category: { type: mongoose.Schema.Types.ObjectId, ref: "QuestionCategory" },
-  answer: String,
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "QuestionCategory",
+  },
+  points: { type: Number, default: 1 },
+  options: ["", ""],
+  attachedFiles: [String],
+  correctAnswer: String,
   guides: String,
 });
 

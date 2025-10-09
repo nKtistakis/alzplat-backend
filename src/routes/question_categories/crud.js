@@ -16,10 +16,7 @@ router.get(
   "/",
   authRoute,
   catchAsync(async (req, res) => {
-    if (req.role !== "admin") {
-      req.query._id = req.questionsCategoryID;
-    }
-    res.json(new Response(await query(QuestionCategory, req)));
+    res.json(new Response(await QuestionCategory.find()));
   })
 );
 

@@ -14,10 +14,10 @@ import {
 const router = express.Router();
 router.get(
   "/",
-  // authRoute,
+  authRoute,
   catchAsync(async (req, res) => {
     if (req.role !== "admin") {
-      req.query._id = req.patientID;
+      req.query.doctor_id = req.doctorID;
     }
     res.json(new Response(await query(Patient, req)));
   })
@@ -26,7 +26,6 @@ router.get(
 router.post(
   "/",
   authRoute,
-  adminRoute,
   catchAsync(async (req, res) => {
     let result = [];
     let patients = req.body;
@@ -43,7 +42,6 @@ router.post(
 router.patch(
   "/",
   authRoute,
-  adminRoute,
   catchAsync(async (req, res) => {
     const queryID = req.query.id;
     const updateFields = req.body;
@@ -60,10 +58,11 @@ router.patch(
 router.delete(
   "/",
   authRoute,
-  adminRoute,
   catchAsync(async (req, res) => {
     const query = req.query;
-    res.json(new Response(await Patient.deleteMany(query)));
+
+    const deleted = await Patient.deleteMany(query);
+    res.json(new Response(deleted));
   })
 );
 

@@ -10,11 +10,13 @@ const AddressSchema = new mongoose.Schema({
   city: String,
   country: String,
   zip: String,
+  _id: false,
 });
 
 const ContactSchema = new mongoose.Schema({
   phone: String,
   email: String,
+  _id: false,
 });
 
 const DoctorSchema = new mongoose.Schema(
@@ -29,9 +31,11 @@ const DoctorSchema = new mongoose.Schema(
     contact: ContactSchema,
     speciality: String,
     patients: [{ type: mongoose.Schema.Types.ObjectId, ref: "Patient" }],
-    healthStructures: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "HealthStructure" },
-    ],
+    health_structure: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "HealthStructure",
+    },
   },
   { timestamps: true }
 );

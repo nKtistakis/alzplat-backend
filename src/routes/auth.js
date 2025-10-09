@@ -20,14 +20,14 @@ router.post(
 
     res.cookie(accessCookieName, accessToken, {
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "Lax",
       secure: false,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
     res.cookie(refreshCookieName, refreshToken, {
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "Lax",
       secure: false,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -45,16 +45,7 @@ router.post(
 router.post(
   "/refresh",
   catchAsync(async (req, res) => {
-    // DoctorID required for fetching doctor
-    if (!req.body.doctorID) {
-      throw new ClientError("Access Denied. Request is malformed.", 401);
-    }
-    // This should change to google doctor ID
-
-    const accessToken = await refresh(
-      req.cookies[refreshCookieName],
-      req.body.doctorID
-    );
+    const accessToken = await refresh(req.cookies[refreshCookieName]);
 
     res.cookie(accessCookieName, accessToken, {
       httpOnly: true,
@@ -100,7 +91,7 @@ router.post(
   })
 );
 
-router.get("/logout", authRoute, (req, res) => {
+router.post("/logout", authRoute, (req, res) => {
   res.clearCookie(accessCookieName);
   res.clearCookie(refreshCookieName);
   res.json(new Response("Succefully Logged Out"));

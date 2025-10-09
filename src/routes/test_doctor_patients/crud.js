@@ -17,7 +17,7 @@ router.get(
   authRoute,
   catchAsync(async (req, res) => {
     if (req.role !== "admin") {
-      req.query._id = req.testDoctorPatientID;
+      req.query.doctor._id = req.doctorID;
     }
     res.json(new Response(await query(TestDoctorPatient, req)));
   })

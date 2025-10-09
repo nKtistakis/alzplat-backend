@@ -7,11 +7,13 @@ const AddressSchema = new mongoose.Schema({
   city: String,
   country: String,
   zip: String,
+  _id: false,
 });
 
 const ContactSchema = new mongoose.Schema({
   phone: String,
   email: String,
+  _id: false,
 });
 
 const healthStructureSchema = new mongoose.Schema(

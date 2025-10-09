@@ -1,6 +1,5 @@
 import ClientError from "../helpers/client_error.js";
 
-
 const getObjectPaths = (obj, prefix = "") => {
   let paths = [];
 
@@ -20,13 +19,15 @@ const getObjectPaths = (obj, prefix = "") => {
 };
 export default async function patch(Model, modelID, updates) {
   const updateFields = getObjectPaths(updates);
-  // This check is required to make sure that no fields that do not exists get passed for an update
-  // ----------------------------------------------------------------------------------------------
-
   const schemaFields = extractSchemaPaths(Model.schema);
 
+  // Allow subpaths and array indices of valid schema fields
   const invalidFields = updateFields.filter(
-    (field) => !schemaFields.includes(field)
+    (field) =>
+      !schemaFields.some(
+        (schemaField) =>
+          field === schemaField || field.startsWith(schemaField + ".")
+      )
   );
 
   if (invalidFields.length > 0) {
@@ -34,11 +35,10 @@ export default async function patch(Model, modelID, updates) {
       `Invalid fields provided for update:\n ${invalidFields.join(", ")}`
     );
   }
-  // ----------------------------------------------------------------------------------------------
 
   const updatedDocument = await Model.findByIdAndUpdate(modelID, updates, {
-    new: true, // Return the updated document
-    runValidators: true, // Ensure schema validation
+    new: true,
+    runValidators: true,
   });
 
   if (!updatedDocument) {

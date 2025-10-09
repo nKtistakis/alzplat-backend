@@ -2,8 +2,13 @@ import mongoose from "mongoose";
 import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
 const TestSchema = new mongoose.Schema({
-  testName: String,
+  name: String,
   questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
+  doctor_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor",
+    required: true,
+  },
 });
 
 TestSchema.statics.testTest = function () {

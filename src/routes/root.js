@@ -51,7 +51,7 @@ router.get(
 );
 
 // TODO: REMOVE FOR SAFETY
-router.get(
+router.post(
   "/demo",
   catchAsync(async (req, res) => {
     res.json(await addDemoEntries());

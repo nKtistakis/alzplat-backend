@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
 const TestDoctorPatientSchema = new mongoose.Schema({
-  test: { type: mongoose.Schema.Types.ObjectId, ref: "Test", required: true },
+  test: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Test",
+    required: true,
+  },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Doctor",
@@ -17,7 +21,19 @@ const TestDoctorPatientSchema = new mongoose.Schema({
   status: { type: mongoose.Schema.Types.ObjectId, ref: "Status" },
   startDate: Date,
   endDate: Date,
-  results: { scorePercent: Number, notes: String },
+  notes: String,
+  timer: Number,
+  stopwatch: Number,
+  results: {
+    scorePercent: Number,
+    notes: String,
+    answers: [
+      {
+        question: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
+        answer: String,
+      },
+    ],
+  },
 });
 
 TestDoctorPatientSchema.statics.testTestDoctorPatient = function () {
