@@ -15,6 +15,9 @@ import Test from "./src/schemas/test.js";
 import Question from "./src/schemas/question.js";
 import QuestionCategory from "./src/schemas/question_category.js";
 import addDemoEntries from "./src/helpers/add_demo_entries.js";
+import TestDoctorPatient from "./src/schemas/test_doctor_patient.js";
+import Status from "./src/schemas/status.js";
+import HealthStructure from "./src/schemas/health_structure.js";
 
 const app = express();
 var corsOptions = {
@@ -52,12 +55,13 @@ async function laucnhServer() {
   // This while ensures a persistant loop on startup until the db connection is established
   while (!(await initDbConnection())) {}
 
-  // await empty();
-  // await addDemoEntries();
-
-  if (!(await QuestionCategory.findOne())) {
-    console.log("No categories found in DB, will add defauly ones");
-    await QuestionCategory.initialCategories();
+  if (
+    Doctor.countDocuments()
+      .exec()
+      .then((count) => count === 0)
+  ) {
+    console.log("No doctors found in DB, will add demo entries...");
+    await addDemoEntries();
   }
 
   app.listen(PORT, () => {
@@ -68,7 +72,23 @@ laucnhServer();
 
 // ---------------------------------STARTUP CHECKS--------------------------------
 
+// console.log(await QuestionCategory.find());
+// console.log(await Status.find());
+// console.log(await Status.find());
 // console.log(await Test.find());
 // console.log(await Question.findById("68e6a13b7c2cfb3f4a0cc56b"));
 // console.log(await Question.find());
 // console.log(await Patient.find({ doctor_id: "68df9f411f45610f58e48892" }));
+// console.log(await TestDoctorPatient.find().populate("test"));
+let a = await TestDoctorPatient.find()
+  .populate({
+    path: "test",
+    populate: { path: "questions", populate: { path: "category" } },
+  })
+  .populate("patient")
+  .populate("status");
+a = a.findLast((e) => e._id).toObject();
+console.log(a.test.questions);
+
+// console.log(await Status.findById("68e00b2f4f4c3b4f5c8b5678"));
+// console.log(await HealthStructure.find());

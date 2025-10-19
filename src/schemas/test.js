@@ -3,7 +3,9 @@ import DEMO_ENTRIES from "../helpers/DEMO_ENTRIES.js";
 
 const TestSchema = new mongoose.Schema({
   name: String,
-  questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
+  questions: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Question", required: true },
+  ],
   doctor_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Doctor",

@@ -1,12 +1,8 @@
 # Use the official Node.js image as the base image
 FROM node:22-alpine
 
-ARG DOTENV_KEY
-ENV DOTENV_PRIVATE_KEY ${DOTENV_KEY}
-# Above naming is needed for dotenvx to take in the environment variable to decrypt the .env file
-
 # Set the working directory
-WORKDIR /usr/responsy
+WORKDIR /usr/alzplat
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -22,4 +18,4 @@ RUN npm prune --omit=dev
 COPY . .
 
 # Command to run the app
-CMD ["npx", "dotenvx", "run", "--", "node", "app.js"]
+CMD ["node", "app.js"]

@@ -18,7 +18,11 @@ const TestDoctorPatientSchema = new mongoose.Schema({
     required: true,
   },
   name: String,
-  status: { type: mongoose.Schema.Types.ObjectId, ref: "Status" },
+  status: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Status",
+    default: new mongoose.Types.ObjectId("68e00b2f4f4c3b4f5c8b5678"),
+  },
   startDate: Date,
   endDate: Date,
   notes: String,
@@ -31,6 +35,7 @@ const TestDoctorPatientSchema = new mongoose.Schema({
       {
         question: { type: mongoose.Schema.Types.ObjectId, ref: "Question" },
         answer: String,
+        _id: false,
       },
     ],
   },

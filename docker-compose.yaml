@@ -1,4 +1,4 @@
-# Deploy service responsy
+# Deploy service alzplat
 
 services:
   backend:
@@ -13,7 +13,7 @@ services:
     depends_on:
       - mongodb
     networks:
-      - responsy-network
+      - alzplat-network
 
   mongodb:
     image: mongo:latest
@@ -27,13 +27,13 @@ services:
       # TODO: Check volumes in general
       - mongo-data:/data/db
     networks:
-      - responsy-network
+      - alzplat-network
 
 volumes:
   mongo-data:
-    name: responsy-api-mongo-volume
+    name: alzplat-api-mongo-volume
 
 networks:
-  responsy-network:
-    name: responsy-network
+  alzplat-network:
+    name: alzplat-network
     driver: bridge

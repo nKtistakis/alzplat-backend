@@ -19,21 +19,21 @@ QuestionCategorySchema.statics.initialCategories = async function () {
   });
 
   const essay = new QuestionCategory({
+    _id: new mongoose.Types.ObjectId("68e00a4f4f4c3b4f5c8b1234"),
     name: "Essay",
     code: "ESSAY",
     files: false,
   });
-
   const audio = new QuestionCategory({
     name: "Audio Memory",
     code: "AUDIO-MEMORY",
-    files: false,
+    files: true,
   });
 
   const image = new QuestionCategory({
     name: "Image Description",
     code: "IMAGE-DESCRIPTION",
-    files: false,
+    files: true,
   });
 
   const pairs = new QuestionCategory({

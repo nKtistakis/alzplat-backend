@@ -19,7 +19,9 @@ router.get(
     if (req.role !== "admin") {
       req.query._id = req.doctorID;
     }
-    res.json(new Response(await query(Doctor, req)));
+    res.json(
+      new Response(await Doctor.findOne(req.query).populate("health_structure"))
+    );
   })
 );
 

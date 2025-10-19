@@ -1,12 +1,6 @@
 import { empty } from "../database/config.js";
 
-import {
-  Response,
-  catchAsync,
-  authRoute,
-  express,
-  adminRoute,
-} from "./route_helpers.js";
+import { catchAsync, authRoute, express } from "./route_helpers.js";
 
 import authRouter from "./auth.js";
 import doctorsRouter from "./doctors/root.js";
@@ -18,7 +12,7 @@ import questionCategoriesRouter from "./question_categories/root.js";
 import testDoctorPatientsRouter from "./test_doctor_patients/root.js";
 import testsRouter from "./tests/root.js";
 
-import addDemoEntries from "../helpers/add_demo_entries.js";
+import AddDemoEntries from "../helpers/add_demo_entries.js";
 
 const router = express.Router();
 
@@ -54,8 +48,13 @@ router.get(
 router.post(
   "/demo",
   catchAsync(async (req, res) => {
-    res.json(await addDemoEntries());
+    res.json(await AddDemoEntries());
   })
+);
+
+router.post(
+  "/demo/user",
+  catchAsync(async (req, res) => {})
 );
 
 export default router;

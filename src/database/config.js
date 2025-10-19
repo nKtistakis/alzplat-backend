@@ -10,7 +10,7 @@ const mongo_uri =
   process.env.MONGO_PASS +
   "@" +
   process.env.MONGO_HOST +
-  "/responsy?authSource=admin";
+  "/alzplat?authSource=admin";
 
 // Perform the inital try to connect to the database
 export async function initDbConnection() {

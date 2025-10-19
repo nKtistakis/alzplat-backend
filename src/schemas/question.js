@@ -9,8 +9,8 @@ const QuestionSchema = new mongoose.Schema({
   },
   points: { type: Number, default: 1 },
   options: ["", ""],
-  attachedFiles: [String],
-  correctAnswer: String,
+  correctOption: Number,
+  attachedFile: String,
   guides: String,
 });
 
